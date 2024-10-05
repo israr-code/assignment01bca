@@ -94,6 +94,20 @@ func (bc *Blockchain) VerifyChain() {
 		}
 	}
 }
+// New function to append a block dynamically
+func (bc *Blockchain) AppendBlock(transaction string) {
+	// Get the previous hash of the last block in the chain
+	previousHash := ""
+	if len(bc.Blocks) > 0 {
+		previousHash = bc.Blocks[len(bc.Blocks)-1].Hash
+	}
+
+	// Append the new block
+	nonce := len(bc.Blocks) + 1 // Assuming nonce is just the block index + 1
+	bc.NewBlock(transaction, nonce, previousHash)
+	fmt.Printf("New block appended with transaction: '%s'\n", transaction)
+}
+
 
 // CalculateHash generates the hash for a block using SHA256
 func CalculateHash(transaction string, nonce int, previousHash string) string {
